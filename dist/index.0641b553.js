@@ -560,26 +560,57 @@ function hmrAccept(bundle, id) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
-const countryList = document.getElementById("countries");
+// Asynchrone functie schrijven met try/catch blok
 const errorMessage = document.getElementById("error");
 async function fetchCountries() {
     try {
-        const response = await (0, _axiosDefault.default).get("https://restcountries.com/v3.1/all");
-        const countryList = response.data[0];
-        countryList.innerHTML = `
-            <li id="country-name"></li>
-            <li id="country-flag"></li>
-            <li id="country-population">Has a population of: </li>
-        `;
+        const response = await (0, _axiosDefault.default).get("https://restcountries.com/v3.1/all?fields=name,flag,continents,population");
+        // Ik had hier eerder https://restcountries.com/v3.1/all staan, maar hier al selecteren op de onderdelen die ik nodig had, bleek veel overzichtelijker.
+        const countries = response.data;
+        // console.log(response.data[0])   Ophalen van de informatie over het eerste land in de array, met indexnummer 0.
+        // Landen sorteren op populatiegrootte van laag naar hoog
+        countries.sort((a, b)=>{
+            return a.population - b.population;
+        });
+        // De gesorteerde lijst gaat in de functie om op de pagina geplaatst te kunnen worden. De functie wordt hier aangeroepen, maar staat verderop gedeclareerd.
+        createListItems(countries);
     } catch (e) {
-        // errors afvangen in de console
+        // Errors afvangen in de console
         console.error(e);
-        // error communiceren in de UI
+        // Error communiceren in de UI
         if (e.response.status === 404) errorMessage.textContent = "Page not found | 404";
         else if (e.response.status === 500) errorMessage.textContent = "Internal server error | 500";
     }
+    fetchCountries(); // Aanroepen van de functie
+    // Bovenstaande functie wordt aangeroepen in het try-blok.
+    function createListItems(countries) {
+        // Koppelen aan het bijbehorende HTML-element
+        const countryList = document.getElementById("country-list");
+        // Hieronder staat de data die in het list-element geïnjecteerd moet worden.
+        // Een map-functie maken om door de hele lijst te gaan, en om de data van elk land met behulp van innerHTML als list-element op de pagina te plaatsen.
+        countryList.innerHTML = countries.map((country)=>{
+            return `
+            <li>
+                <div class="country-info">
+                    <img src="${country.flag}" alt="Vlag van ${country.name.common}" class="flag">
+                    <h3 class="${fetchRegion(country.region)}">${country.name}><h3> 
+                    <p class="population">Has a population of ${country.population} people</p>
+                </div>  
+            </li>
+           `;
+        });
+        // Het gedeelte fetch-region geeft geen tekst weer op de pagina, maar dit is om de naam van het land die daarachter wordt gedefinieerd in een bepaalde kleur die hoort bij die regio weer te geven.
+        // Onderstaande is nog niet af.
+        function fetchRegion() {
+            return countryList.continents;
+        }
+        // Switch statements maken
+        fetchRegion();
+        function fetchPopulation() {
+            return countryList.population;
+        } // Even kijken of deze echt nodig is.
+    }
 }
-fetchCountries();
 
 },{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jo6P5":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
