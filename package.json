@@ -10,7 +10,6 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
   "devDependencies": {
     "parcel": "^2.0.0",
     "parcel-plugin-nuke-dist": "^1.0.1"
