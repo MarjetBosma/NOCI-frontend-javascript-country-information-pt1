@@ -7,7 +7,6 @@ const errorMessage= document.getElementById('error');
 async function fetchCountries() {
     try {
         const response = await axios.get("https://restcountries.com/v3.1/all")
-        // Ik had hier eerder https://restcountries.com/v3.1/all staan, maar hier al selecteren op de onderdelen die ik nodig had, bleek veel overzichtelijker.
         const countries = response.data
 
         // console.log(response.data[0])   Ophalen van de informatie over het eerste land in de array, met indexnummer 0.
@@ -55,13 +54,13 @@ async function fetchCountries() {
         })
         // Het gedeelte fetch-region geeft geen tekst weer op de pagina, maar dit is om de naam van het land die daarachter wordt gedefinieerd in een bepaalde kleur die hoort bij die regio weer te geven.
 
-
-    function fetchRegion() {   // Deze functie haalt de data op van het continent waarop het land ligt
-        return countries.continents;
-    }
+        // Wat gaat er hier mis? Ik krijg nog helemaal niks op de pagina te zien. (Behalve de wereldkaart dan, maar die staat gecodeerd in de HTML.)
 
 
     // Deze functie haalt de data op van het continent waarop het land ligt m.b.v. switch statements. Bij de huiswerkklas werd gezegd dat hier geen breaks nodig waren, maar ik begrijp niet helemaal waarom.
+
+        const currentRegion = countries.continents  // Of moet deze in onderstaande functie?
+
         function fetchRegion(currentRegion) {
             switch (currentRegion) {
                 case 'Africa':
@@ -74,7 +73,9 @@ async function fetchCountries() {
                     return 'yellow';
                 case 'Oceania':
                     return 'purple';
-                default:
-                    return 'default';
             }
         }
+        fetchRegion();
+        // Moet ik nu nog voor iedere case apart een referentie naar de HTML maken? Er moet geen tekst gegenreerd worden, maar ik neem aan wel een anker class voor de CSS?
+
+        // Ik zie nog veel grijze (ongebruikte?) en paars onderlijnde (wat betekent dat precies?) variabelen, ik weet niet zo goed hoe dat dan zit.
