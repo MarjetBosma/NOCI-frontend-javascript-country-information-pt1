@@ -564,7 +564,7 @@ var _axiosDefault = parcelHelpers.interopDefault(_axios);
 const errorMessage = document.getElementById("error");
 async function fetchCountries() {
     try {
-        const response = await (0, _axiosDefault.default).get("https://restcountries.com/v3.1/all?fields=name,flag,continents,population");
+        const response = await (0, _axiosDefault.default).get("https://restcountries.com/v3.1/all");
         // Ik had hier eerder https://restcountries.com/v3.1/all staan, maar hier al selecteren op de onderdelen die ik nodig had, bleek veel overzichtelijker.
         const countries = response.data;
         // console.log(response.data[0])   Ophalen van de informatie over het eerste land in de array, met indexnummer 0.
@@ -582,7 +582,7 @@ async function fetchCountries() {
         else if (e.response.status === 500) errorMessage.textContent = "Internal server error | 500";
     }
     fetchCountries(); // Aanroepen van de functie
-    // Bovenstaande functie wordt aangeroepen in het try-blok.
+    // Onderstaande functie wordt aangeroepen in het try-blok.
     function createListItems(countries) {
         // Koppelen aan het bijbehorende HTML-element
         const countryList = document.getElementById("country-list");
@@ -600,15 +600,26 @@ async function fetchCountries() {
            `;
         });
         // Het gedeelte fetch-region geeft geen tekst weer op de pagina, maar dit is om de naam van het land die daarachter wordt gedefinieerd in een bepaalde kleur die hoort bij die regio weer te geven.
-        // Onderstaande is nog niet af.
         function fetchRegion() {
-            return countryList.continents;
+            return countries.continents;
         }
-        // Switch statements maken
-        fetchRegion();
-        function fetchPopulation() {
-            return countryList.population;
-        } // Even kijken of deze echt nodig is.
+        // Deze functie haalt de data op van het continent waarop het land ligt m.b.v. switch statements. Bij de huiswerkklas werd gezegd dat hier geen breaks nodig waren, maar ik begrijp niet helemaal waarom.
+        function fetchRegion(currentRegion) {
+            switch(currentRegion){
+                case "Africa":
+                    return "blue";
+                case "Americas":
+                    return "green";
+                case "Asia":
+                    return "red";
+                case "Europe":
+                    return "yellow";
+                case "Oceania":
+                    return "purple";
+                default:
+                    return "default";
+            }
+        }
     }
 }
 

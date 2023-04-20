@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 // Asynchrone functie schrijven met try/catch blok
 
 const errorMessage= document.getElementById('error');
@@ -34,7 +33,7 @@ async function fetchCountries() {
     void fetchCountries();   // Aanroepen van de functie
 
 
-    // Bovenstaande functie wordt aangeroepen in het try-blok.
+    // Onderstaande functie wordt aangeroepen in het try-blok.
 
     function createListItems(countries) {
         // Koppelen aan het bijbehorende HTML-element
@@ -56,13 +55,26 @@ async function fetchCountries() {
         })
         // Het gedeelte fetch-region geeft geen tekst weer op de pagina, maar dit is om de naam van het land die daarachter wordt gedefinieerd in een bepaalde kleur die hoort bij die regio weer te geven.
 
-// Onderstaande is nog niet af.
 
     function fetchRegion() {   // Deze functie haalt de data op van het continent waarop het land ligt
         return countries.continents;
     }
 
-    // Switch statements maken
-    fetchRegion(); {
-    }
 
+    // Deze functie haalt de data op van het continent waarop het land ligt m.b.v. switch statements. Bij de huiswerkklas werd gezegd dat hier geen breaks nodig waren, maar ik begrijp niet helemaal waarom.
+        function fetchRegion(currentRegion) {
+            switch (currentRegion) {
+                case 'Africa':
+                    return 'blue';
+                case 'Americas':
+                    return 'green';
+                case 'Asia':
+                    return 'red';
+                case 'Europe':
+                    return 'yellow';
+                case 'Oceania':
+                    return 'purple';
+                default:
+                    return 'default';
+            }
+        }
