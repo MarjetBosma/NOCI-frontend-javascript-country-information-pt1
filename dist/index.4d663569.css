@@ -1,3 +1,66 @@
+@import "https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Roboto+Condensed:wght@300&display=swap";
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
+body {
+  flex-direction: column;
+  align-items: center;
+  font-family: Roboto Condensed, sans-serif;
+  display: flex;
+}
+
+h1 {
+  margin-top: 40px;
+  font-family: Gochi Hand, cursive;
+  font-size: 50px;
+}
+
+.world-map-image {
+  width: 1000px;
+}
+
+.flag {
+  width: 20px;
+  margin: 0 10px 0 0;
+  display: inline-block;
+}
+
+.population {
+  margin: 0 0 12px;
+  font-size: 10px;
+}
+
+#country-list {
+  max-width: 1000px;
+  column-count: 3;
+  background-color: #f8f8ff;
+  border: 1px solid #696969;
+  border-radius: 4px;
+  padding: 30px;
+  list-style-type: none;
+}
+
+.blue {
+  color: #4169e1;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: maroon;
+}
+
+.yellow {
+  color: gold;
+}
+
+.purple {
+  color: #8a2be2;
+}
 
 /*# sourceMappingURL=index.4d663569.css.map */

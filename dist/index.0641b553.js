@@ -565,9 +565,10 @@ const errorMessage = document.getElementById("error");
 async function fetchCountries() {
     try {
         const response = await (0, _axiosDefault.default).get("https://restcountries.com/v3.1/all");
-        // Ik had hier eerder https://restcountries.com/v3.1/all staan, maar hier al selecteren op de onderdelen die ik nodig had, bleek veel overzichtelijker.
         const countries = response.data;
-        // console.log(response.data[0])   Ophalen van de informatie over het eerste land in de array, met indexnummer 0.
+        const population = response.data.population;
+        console.log(response.data[0]) // Ophalen van de informatie over het eerste land in de array, met indexnummer 0.
+        ;
         // Landen sorteren op populatiegrootte van laag naar hoog
         countries.sort((a, b)=>{
             return a.population - b.population;
@@ -590,35 +591,29 @@ async function fetchCountries() {
         // Een map-functie maken om door de hele lijst te gaan, en om de data van elk land met behulp van innerHTML als list-element op de pagina te plaatsen.
         countryList.innerHTML = countries.map((country)=>{
             return `
-            <li>
-                <div class="country-info">
-                    <img src="${country.flag}" alt="Vlag van ${country.name.common}" class="flag">
+            <li class="country-info">
+                    <img src="${country.flags.svg}" alt="Vlag van ${country.name.common}" class="flag"/>
                     <h3 class="${fetchRegion(country.region)}">${country.name}><h3> 
                     <p class="population">Has a population of ${country.population} people</p>
-                </div>  
             </li>
            `;
         });
-        // Het gedeelte fetch-region geeft geen tekst weer op de pagina, maar dit is om de naam van het land die daarachter wordt gedefinieerd in een bepaalde kleur die hoort bij die regio weer te geven.
-        function fetchRegion() {
-            return countries.continents;
-        }
-        // Deze functie haalt de data op van het continent waarop het land ligt m.b.v. switch statements. Bij de huiswerkklas werd gezegd dat hier geen breaks nodig waren, maar ik begrijp niet helemaal waarom.
-        function fetchRegion(currentRegion) {
-            switch(currentRegion){
-                case "Africa":
-                    return "blue";
-                case "Americas":
-                    return "green";
-                case "Asia":
-                    return "red";
-                case "Europe":
-                    return "yellow";
-                case "Oceania":
-                    return "purple";
-                default:
-                    return "default";
-            }
+    }
+    // Het gedeelte fetch-region geeft geen tekst weer op de pagina, maar dit is om de naam van het land die daarachter wordt gedefinieerd in een bepaalde kleur die hoort bij die regio weer te geven.
+    // Wat gaat er hier mis? Ik krijg geen geïnjecteerde data te zien op de pagina.
+    // Deze functie haalt de data op van het continent waarop het land ligt m.b.v. switch statements.
+    function fetchRegion(currentRegion) {
+        switch(currentRegion){
+            case "Africa":
+                return "blue";
+            case "Americas":
+                return "green";
+            case "Asia":
+                return "red";
+            case "Europe":
+                return "yellow";
+            case "Oceania":
+                return "purple";
         }
     }
 }
@@ -884,8 +879,9 @@ const typeOfTest = (type)=>(thing)=>typeof thing === type;
  *
  * @returns {boolean} True if value is an FormData, otherwise false
  */ const isFormData = (thing)=>{
-    const pattern = "[object FormData]";
-    return thing && (typeof FormData === "function" && thing instanceof FormData || toString.call(thing) === pattern || isFunction(thing.toString) && thing.toString() === pattern);
+    let kind;
+    return thing && (typeof FormData === "function" && thing instanceof FormData || isFunction(thing.append) && ((kind = kindOf(thing)) === "formdata" || // detect form-data instance
+    kind === "object" && isFunction(thing.toString) && thing.toString() === "[object FormData]"));
 };
 /**
  * Determine if a value is a URLSearchParams object
@@ -1598,7 +1594,7 @@ var _axiosErrorJsDefault = parcelHelpers.interopDefault(_axiosErrorJs);
 // temporary hotfix to avoid circular references until AxiosURLSearchParams is refactored
 var _formDataJs = require("../platform/node/classes/FormData.js");
 var _formDataJsDefault = parcelHelpers.interopDefault(_formDataJs);
-var Buffer = require("7d61c0022b40601e").Buffer;
+var Buffer = require("7f1ad0c469c42e26").Buffer;
 "use strict";
 /**
  * Determines if the given thing is a array or js object.
@@ -1753,15 +1749,15 @@ const predicates = (0, _utilsJsDefault.default).toFlatObject((0, _utilsJsDefault
 }
 exports.default = toFormData;
 
-},{"7d61c0022b40601e":"fCgem","../utils.js":"5By4s","../core/AxiosError.js":"3u8Tl","../platform/node/classes/FormData.js":"aFlee","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fCgem":[function(require,module,exports) {
+},{"7f1ad0c469c42e26":"fCgem","../utils.js":"5By4s","../core/AxiosError.js":"3u8Tl","../platform/node/classes/FormData.js":"aFlee","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fCgem":[function(require,module,exports) {
 /*!
  * The buffer module from node.js, for the browser.
  *
  * @author   Feross Aboukhadijeh <https://feross.org>
  * @license  MIT
  */ /* eslint-disable no-proto */ "use strict";
-var base64 = require("31ceb590c10b26fc");
-var ieee754 = require("ff3c70736cb472c6");
+var base64 = require("ad862c71016916a0");
+var ieee754 = require("a8cfd1c77b766d91");
 var customInspectSymbol = typeof Symbol === "function" && typeof Symbol["for"] === "function" // eslint-disable-line dot-notation
  ? Symbol["for"]("nodejs.util.inspect.custom") // eslint-disable-line dot-notation
  : null;
@@ -2983,7 +2979,7 @@ var hexSliceLookupTable = function() {
     return table;
 }();
 
-},{"31ceb590c10b26fc":"eIiSV","ff3c70736cb472c6":"cO95r"}],"eIiSV":[function(require,module,exports) {
+},{"ad862c71016916a0":"eIiSV","a8cfd1c77b766d91":"cO95r"}],"eIiSV":[function(require,module,exports) {
 "use strict";
 exports.byteLength = byteLength;
 exports.toByteArray = toByteArray;
@@ -4590,7 +4586,7 @@ exports.default = {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "VERSION", ()=>VERSION);
-const VERSION = "1.3.5";
+const VERSION = "1.3.6";
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"45wzn":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
