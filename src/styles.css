@@ -24,12 +24,12 @@ h1 {
 
 .flag {
     width: 20px;
-    margin: 0 10px 0 0;
+    margin-right: 10px;
     display: inline-block;
 }
 
 .population {
-    margin: 0 0 12px 0;
+    margin-top: 12px;
     font-size: 10px;
 }
 
@@ -54,7 +54,6 @@ h1 {
 .red {
     color: maroon;
 }
-
 
 .yellow {
     color: gold;

@@ -31,7 +31,7 @@ async function fetchCountries() {
         }
     }
     void fetchCountries();   // Aanroepen van de functie
-
+}
 
     // Onderstaande functie wordt aangeroepen in het try-blok.
 
@@ -46,16 +46,13 @@ async function fetchCountries() {
             return `
             <li class="country-info">
                     <img src="${country.flags.svg}" alt="Vlag van ${country.name.common}" class="flag"/>
-                    <h3 class="${fetchRegion(country.region)}">${country.name}><h3> 
+                    <h3 class="${fetchRegion(country.region)}">${country.name.common}><h3> 
                     <p class="population">Has a population of ${country.population} people</p>
             </li>
            `
             }
         )}
         // Het gedeelte fetch-region geeft geen tekst weer op de pagina, maar dit is om de naam van het land die daarachter wordt gedefinieerd in een bepaalde kleur die hoort bij die regio weer te geven.
-
-        // Wat gaat er hier mis? Ik krijg geen geïnjecteerde data te zien op de pagina.
-
 
         // Deze functie haalt de data op van het continent waarop het land ligt m.b.v. switch statements.
 
@@ -72,4 +69,4 @@ async function fetchCountries() {
                 case 'Oceania':
                     return 'purple';
             }
-        }}
+        }
