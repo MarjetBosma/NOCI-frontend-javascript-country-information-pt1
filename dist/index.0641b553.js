@@ -560,6 +560,7 @@ function hmrAccept(bundle, id) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
+// Eerste deel van de opdracht
 // Asynchrone functie schrijven met try/catch blok
 const errorMessage = document.getElementById("error");
 async function fetchCountries() {
@@ -567,8 +568,7 @@ async function fetchCountries() {
         const response = await (0, _axiosDefault.default).get("https://restcountries.com/v3.1/all");
         const countries = response.data;
         const population = response.data.population;
-        console.log(response.data[0]) // Ophalen van de informatie over het eerste land in de array, met indexnummer 0.
-        ;
+        // console.log(response.data[0])   // Ophalen van de informatie over het eerste land in de array, met indexnummer 0.
         // Landen sorteren op populatiegrootte van laag naar hoog
         countries.sort((a, b)=>{
             return a.population - b.population;
@@ -616,6 +616,34 @@ function fetchRegion(currentRegion) {
             return "purple";
     }
 }
+// Tweede deel van de opdracht
+// Koppelen van de opgehaalde data aan HTML-element
+const searchResult = document.getElementById("search-result");
+// Asynchrone functie schrijven
+async function fetchCountryDetails(name) {
+    try {
+        const response = await (0, _axiosDefault.default).get(`https://restcountries.com/v3.1/all`);
+        const countries = response.data;
+        // console.log(countries);
+        searchResult.innerHTML = `
+        <article class="search-result-container">
+        <span class="flag-name-container">
+            <img id="flag-image" src="${countries[0].flags.svg}" alt="Flag of ${countries[0].name.common}"/>
+            <h3 id="country-name">${countries[0].name.common}</h3>
+                </span>
+        <div id="country-description-container">
+            <p class="country-description">${countries[0].name.common} is situated in ${countries[0].subregion}. It has a population of ${countries[0].population} people.</p> 
+            <p class="country-description">The capital is ${countries[0].capital} and you can pay with ${countries[0].currencies}.</p>
+             <p class="country-description">They speak ${countries.languages}.</p>
+                 </div>
+            </article>
+            `;
+        console.log(countries[0]);
+    } catch (e) {
+        console.error(e);
+    }
+}
+fetchCountryDetails();
 
 },{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jo6P5":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -1593,7 +1621,7 @@ var _axiosErrorJsDefault = parcelHelpers.interopDefault(_axiosErrorJs);
 // temporary hotfix to avoid circular references until AxiosURLSearchParams is refactored
 var _formDataJs = require("../platform/node/classes/FormData.js");
 var _formDataJsDefault = parcelHelpers.interopDefault(_formDataJs);
-var Buffer = require("7f1ad0c469c42e26").Buffer;
+var Buffer = require("aeef75946eb56e39").Buffer;
 "use strict";
 /**
  * Determines if the given thing is a array or js object.
@@ -1748,15 +1776,15 @@ const predicates = (0, _utilsJsDefault.default).toFlatObject((0, _utilsJsDefault
 }
 exports.default = toFormData;
 
-},{"7f1ad0c469c42e26":"fCgem","../utils.js":"5By4s","../core/AxiosError.js":"3u8Tl","../platform/node/classes/FormData.js":"aFlee","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fCgem":[function(require,module,exports) {
+},{"aeef75946eb56e39":"fCgem","../utils.js":"5By4s","../core/AxiosError.js":"3u8Tl","../platform/node/classes/FormData.js":"aFlee","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fCgem":[function(require,module,exports) {
 /*!
  * The buffer module from node.js, for the browser.
  *
  * @author   Feross Aboukhadijeh <https://feross.org>
  * @license  MIT
  */ /* eslint-disable no-proto */ "use strict";
-var base64 = require("ad862c71016916a0");
-var ieee754 = require("a8cfd1c77b766d91");
+var base64 = require("8caeeacfefbd86a5");
+var ieee754 = require("99cbffddf0e63343");
 var customInspectSymbol = typeof Symbol === "function" && typeof Symbol["for"] === "function" // eslint-disable-line dot-notation
  ? Symbol["for"]("nodejs.util.inspect.custom") // eslint-disable-line dot-notation
  : null;
@@ -2978,7 +3006,7 @@ var hexSliceLookupTable = function() {
     return table;
 }();
 
-},{"ad862c71016916a0":"eIiSV","a8cfd1c77b766d91":"cO95r"}],"eIiSV":[function(require,module,exports) {
+},{"8caeeacfefbd86a5":"eIiSV","99cbffddf0e63343":"cO95r"}],"eIiSV":[function(require,module,exports) {
 "use strict";
 exports.byteLength = byteLength;
 exports.toByteArray = toByteArray;
