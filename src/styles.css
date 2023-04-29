@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Roboto+Condensed:wght@300&display=swap');
 
-/* Eerste deel van de opdracht */
-
 /* CSS reset */
 
 * {
@@ -75,8 +73,8 @@ h1 {
 }
 
 
-/* Tweede deel van de opdracht */
-git
+/* Tweede deel van de opdracht: Country Searcher pagina */
+
 #spinning-globe {
     width: 300px;
     margin: 30px;
@@ -101,7 +99,6 @@ git
 }
 
 input {
-
     padding: 10px;
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 16px;
@@ -117,6 +114,8 @@ button {
     border: 1px solid dimgrey;
     border-radius: 4px;
 }
+
+/* Ik heb de styling van het zoekresultaat kunnen zien en beoordelen, toen in een eerder stadium het allereerste land laten zien wel lukte. Ïk krijg de zoekfunctie echter niet werkend, dus nu is er niks te zien op de pagina.*/
 
 .search-result-container {
     display: flex;

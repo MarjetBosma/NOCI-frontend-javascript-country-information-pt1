@@ -32,8 +32,8 @@ async function fetchCountries() {
             errorMessage.textContent = "Internal server error | 500"
         }
     }
-    void fetchCountries();   // Aanroepen van de functie
 }
+void fetchCountries();   // Aanroepen van de functie
 
 // Onderstaande functie wordt aangeroepen in het try-blok.
 
@@ -48,12 +48,13 @@ function createListItems(countries) {
             return `
             <li class="country-info">
                     <img src="${country.flags.svg}" alt="Vlag van ${country.name.common}" class="flag"/>
-                    <h3 class="${fetchRegion(country.region)}">${country.name.common}><h3> 
+                    <h3 class="${fetchRegion(country.region)}">${country.name.common}<h3> 
                     <p class="population">Has a population of ${country.population} people</p>
-            </li>
-           `
+                    </li>
+                   `
         }
-    )}
+    ).join('')}  // Dit gebruik ik omdat er anders na elk list-item een komma komt te staan op de pagina.
+
 // Het gedeelte fetch-region geeft geen tekst weer op de pagina, maar dit is om de naam van het land die daarachter wordt gedefinieerd in een bepaalde kleur die hoort bij die regio weer te geven.
 
 // Deze functie haalt de data op van het continent waarop het land ligt m.b.v. switch statements.
@@ -73,38 +74,86 @@ function fetchRegion(currentRegion) {
     }
 }
 
+
 // Tweede deel van de opdracht
 
-// Koppelen van de opgehaalde data aan HTML-element
-const searchResult = document.getElementById("search-result");
+// Referentie maken naar het zoekformulier
+const searchCountryForm = document.getElementById('search-query-form');
+// Plaatsen van een event listener met submit als event en de functie die het event object gaat ontvangen
+searchCountryForm.addEventListener('submit', searchCountry);
 
-// Asynchrone functie schrijven
+// Referentie naar zoekresultaat en error
+const countryInfoContainer = document.getElementById('country-info-container');
+const errorMessageContainer = document.getElementById('error-message');
+
+// Functie voor ontvangen event-object
+function searchCountry(e) {
+    e.preventDefault();  // De pagina wordt hiermee niet ververst na submitten
+    const searchQueryField = document.getElementById('search-query-field') // Referentie naar zoekveld
+
+    fetchCountryDetails(searchQueryField.value); // fetchCountryDetails asynchrone functie aanroepen met zoekterm als parameter. Dit lijkt echt niet goed te gaan.
+    searchQueryField.value = ''; // Zoekveld weer leegmaken na submitten zoekopdracht
+}
+
+
+
+
+// Asynchrone functie schrijven. De functie verwacht een zoekopdracht met de naam van een land, en gebruikt de find-methode om een object in de landen-array te vinden dat hetzelfde is.
 
 async function fetchCountryDetails(name) {
+
+    countryInfoContainer.innerHTML = ''; // Verwijdert het eventuele voorgaande zoekresultaat
+    errorMessageContainer.innerHTML = ''; // Verwijdert eventuele error message
+
     try {
-        const response = await axios.get(`https://restcountries.com/v3.1/all`);
-        const countries = response.data;
-        // console.log(countries);
-        searchResult.innerHTML =
+        const response = await axios.get(`https://restcountries.com/v2/name/${name}`);
+        const country = response.data;
+        console.log(country);
+
+        // Hieronder nog een eerdere poging, die helaas ook niet werkte
+
+        //console.log(response.data);
+        //const searchResult = response.data.find((country) => {
+        //    return country.name === searhQueryField.value;
+        //});
+        // Bovenstaande functie verwacht een zoekopdracht (query) met de naam van een land, en gebruikt de find-methode om een object in de landen-array te vinden dat hetzelfde is.
+        //const { flag, name, subregion, population, capital, languages } = searchResult
+        //console.log(searchResult.name);
+        // De gewenste objecten destructuren en dit teruggeven als zoekresultaat. De naam van het gevonden land loggen in de console.
+
+
+        // Weergeven op de pagina:
+        countryInfoContainer.innerHTML =
             `
         <article class="search-result-container">
         <span class="flag-name-container">
-            <img id="flag-image" src="${countries[0].flags.svg}" alt="Flag of ${countries[0].name.common}"/>
-            <h3 id="country-name">${countries[0].name.common}</h3>
+            <img id="flag-image" src="${country.flag}" alt="Flag"/>
+            <h3 id="country-name">${country.name}</h3>
                 </span>
         <div id="country-description-container">
-            <p class="country-description">${countries[0].name.common} is situated in ${countries[0].subregion}. It has a population of ${countries[0].population} people.</p> 
-            <p class="country-description">The capital is ${countries[0].capital} and you can pay with ${countries[0].currencies}.</p>
-             <p class="country-description">They speak ${countries.languages}.</p>
+            <p class="country-description">${country.name} is situated in ${country.subregion}. It has a population of ${country.population} people.</p> 
+            <p class="country-description">The capital is ${country.capital} and you can pay with ${country.currencies.name[0]}.</p>
+             <p class="country-description">They speak ${languages.name[0]}.</p>  
                  </div>
             </article>
             `
-        console.log(countries[0]);
+        // Currencies en languages zijn arrays Ik heb er nu voor gekozen om alleen het eerste item daarvan weer te geven. als dit werkt, dan wil ik proberen om meerdere items weer te gevem.
+        // Echter, ik krijg dit al niet werkend...
+
     } catch (e) {
         console.error(e);
+        if (e.response.status === 404) {
+            errorMessage.textContent = "Page not found | 404"
+        } else if (e.response.status === 500) {
+            errorMessage.textContent = "Internal server error | 500"
+        }
+
     }
 }
-fetchCountryDetails()
+searchCountry();
+
+
+
 
 
 
