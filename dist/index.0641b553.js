@@ -617,61 +617,52 @@ function fetchRegion(currentRegion) {
     }
 }
 // Tweede deel van de opdracht
-// Referentie maken naar het zoekformulier
-const searchCountryForm = document.getElementById("search-query-form");
-// Plaatsen van een event listener met submit als event en de functie die het event object gaat ontvangen
-searchCountryForm.addEventListener("submit", searchCountry);
+const searchCountryForm = document.getElementById("search-query-form"); // Referentie naar zoekformulier
+searchCountryForm.addEventListener("submit", searchCountry); // Plaatsen van een event listener, met als argumenten het submitten van de zoekopdracht en de functie die deze verwerkt
 // Referentie naar zoekresultaat en error
-const countryInfoContainer = document.getElementById("country-info-container");
-const errorMessageContainer = document.getElementById("error-message");
-// Functie voor ontvangen event-object
+const countryInfoContainer = document.getElementById("country-info-container"); // Referentie weergegeven zoekresultaat
+const errorMessageContainer = document.getElementById("error-message"); // Referentie error message
 function searchCountry(e) {
-    e.preventDefault(); // De pagina wordt hiermee niet ververst na submitten
-    const searchQueryField = document.getElementById("search-query-field") // Referentie naar zoekveld
-    ;
-    fetchCountryDetails(searchQueryField.value); // fetchCountryDetails asynchrone functie aanroepen met zoekterm als parameter. Dit lijkt echt niet goed te gaan.
-    searchQueryField.value = ""; // Zoekveld weer leegmaken na submitten zoekopdracht
+    e.preventDefault(); // Pagina ververst hierdoor niet standaard
+    const searchQueryField = document.getElementById("search-query-field"); // Referentie invoerveld
+    fetchCountryDetails(searchQueryField.value); // Aanroepen onderstaande functie, met zoekterm als argument
+    searchQueryfield.value = ""; // Maakt na zoeken invoerveld weer leeg
 }
-// Asynchrone functie schrijven. De functie verwacht een zoekopdracht met de naam van een land, en gebruikt de find-methode om een object in de landen-array te vinden dat hetzelfde is.
 async function fetchCountryDetails(name) {
     countryInfoContainer.innerHTML = ""; // Verwijdert het eventuele voorgaande zoekresultaat
-    errorMessageContainer.innerHTML = ""; // Verwijdert eventuele error message
+    errorMessageContainer.innerHTML = ""; // Verwijdert eventuele error message van vorige zoekopdracht
     try {
         const response = await (0, _axiosDefault.default).get(`https://restcountries.com/v2/name/${name}`);
-        const country = response.data;
+        const country = response.data; // 1 resultaat weergeven
         console.log(country);
-        // Hieronder nog een eerdere poging, die helaas ook niet werkte
-        //console.log(response.data);
-        //const searchResult = response.data.find((country) => {
-        //    return country.name === searhQueryField.value;
-        //});
-        // Bovenstaande functie verwacht een zoekopdracht (query) met de naam van een land, en gebruikt de find-methode om een object in de landen-array te vinden dat hetzelfde is.
-        //const { flag, name, subregion, population, capital, languages } = searchResult
-        //console.log(searchResult.name);
-        // De gewenste objecten destructuren en dit teruggeven als zoekresultaat. De naam van het gevonden land loggen in de console.
-        // Weergeven op de pagina:
-        countryInfoContainer.innerHTML = `
-        <article class="search-result-container">
-        <span class="flag-name-container">
-            <img id="flag-image" src="${country.flag}" alt="Flag"/>
-            <h3 id="country-name">${country.name}</h3>
-                </span>
-        <div id="country-description-container">
-            <p class="country-description">${country.name} is situated in ${country.subregion}. It has a population of ${country.population} people.</p> 
-            <p class="country-description">The capital is ${country.capital} and you can pay with ${country.currencies.name[0]}.</p>
-             <p class="country-description">They speak ${languages.name[0]}.</p>  
-                 </div>
-            </article>
-            `;
-    // Currencies en languages zijn arrays Ik heb er nu voor gekozen om alleen het eerste item daarvan weer te geven. als dit werkt, dan wil ik proberen om meerdere items weer te gevem.
-    // Echter, ik krijg dit al niet werkend...
+        showCountry(country); // Aanroepen van de functie hieronder, die de resultaten op de pagina zet
     } catch (e) {
         console.error(e);
-        if (e.response.status === 404) errorMessage.textContent = "Page not found | 404";
-        else if (e.response.status === 500) errorMessage.textContent = "Internal server error | 500";
+        errorMessageContainer.innerHTML = `
+        <p class=error-message>Country not found, try again.</p>
+        `;
     }
 }
-searchCountry();
+function showCountry(country) {
+    countryInfoContainer.innerHTML = `
+        <article class="search-result-container">
+            <span class="flag-name-container">
+                <img id="flag-image" src="${country.flag}" alt="Flag"/>
+                <h3 id="country-name">${country.name}</h3>
+                </span>
+        <div id="country-description-container">
+            <p class="country-description">${country.name} is situated in ${country.subregion}. It has a population of ${country.population} people.</p>
+            <p class="country-description">The capital is ${country.capital} ${createCurrencyDescription(country.currencies)}.</p>
+            <p class="country-description">They speak ${country.languages[0]}.</p>
+            </div>
+        </article>
+        `;
+}
+function createCurrencyDescription(currencies) {
+    let output = "and you can pay with ";
+    if (currencies.length === 2) return output + `${currencies[0].name} and ${currencies[1].name}'s`;
+    return output + `${currencies[0].name}'s`; // Als er één currency vermeld staat
+}
 
 },{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jo6P5":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");

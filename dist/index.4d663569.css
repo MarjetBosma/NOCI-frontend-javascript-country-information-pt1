@@ -139,6 +139,11 @@ button {
   padding: 10px;
 }
 
+.error-message {
+  padding-inline: 20px;
+  padding-top: 10px;
+}
+
 #home-link {
   color: #000;
   padding-top: 60px;
