@@ -23,7 +23,7 @@ h1 {
     margin-top: 40px;
 }
 
-/* Country Information pagina (eerste deel van de opdracht) */
+/* Styling per onderdeel */
 
 .world-map-image {
     width: 1000px;
@@ -72,99 +72,3 @@ h1 {
     color: blueviolet;
 }
 
-
-/* Tweede deel van de opdracht: Country Searcher pagina */
-
-#spinning-globe {
-    width: 300px;
-    margin: 30px;
-}
-
-#country-searcher-link {
-    text-decoration: none;
-    font-family: 'Gochi Hand', cursive;
-    font-size: 30px;
-    color: black;
-    padding-top: 60px;
-}
-
-#country-searcher-link:hover {
-    color: dimgrey;
-}
-
-#search-country-form {
-    display: flex;
-    flex-direction: row;
-
-}
-
-input {
-    padding: 10px;
-    font-family: 'Roboto Condensed', sans-serif;
-    font-size: 16px;
-    border: 1px solid dimgrey;
-    background-color: ghostwhite;
-    border-radius: 4px;
-}
-
-button {
-    padding: 10px;
-    font-family: 'Roboto Condensed', sans-serif;
-    font-size: 16px;
-    border: 1px solid dimgrey;
-    border-radius: 4px;
-}
-
-/* Ik heb de styling van het zoekresultaat kunnen zien en beoordelen, toen in een eerder stadium het allereerste land laten zien wel lukte. Ïk krijg de zoekfunctie echter niet werkend, dus nu is er niks te zien op de pagina.*/
-
-.search-result-container {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid dimgrey;
-    background-color: ghostwhite;
-    border-radius: 4px;
-    margin-block: 60px;
-}
-
-.flag-name-container {
-    display: flex;
-    flex-direction: row;
-    margin: 20px;
-}
-
-#flag-image {
-    width: 40px;
-    margin: 10px;
-}
-
-#country-name {
-    font-family: 'Gochi Hand', cursive;
-    font-size: 30px;
-    margin: 10px;
-}
-
-#country-description-container {
-    margin-inline: 20px;
-    margin-bottom: 20px;
-}
-
-.country-description {
-    padding: 10px;
-}
-
-.error-message {
-    padding-inline: 20px;
-    padding-top: 10px;
-}
-
-#home-link {
-    text-decoration: none;
-    font-family: 'Gochi Hand', cursive;
-    font-size: 30px;
-    color: black;
-    padding-top: 60px;
-}
-
-#home-link:hover {
-    color: dimgrey;
-}
